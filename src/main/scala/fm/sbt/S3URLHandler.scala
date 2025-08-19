@@ -376,7 +376,7 @@ final class S3URLHandler extends URLHandler {
     
     require(!listing.isTruncated, "Truncated ObjectListing!  Making additional calls currently isn't implemented!")
     
-    val keys: Seq[String] = listing.getCommonPrefixes.asScala ++ listing.getObjectSummaries.asScala.map{ _.getKey }
+    val keys: Seq[String] = (listing.getCommonPrefixes.asScala ++ listing.getObjectSummaries.asScala.map{ _.getKey }).toSeq
     
     val res: Seq[URL] = keys.map{ k: String =>
       new URL(url.toString.stripSuffix("/") + "/" + k.stripPrefix(prefix))

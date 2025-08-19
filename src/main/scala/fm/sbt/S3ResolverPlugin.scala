@@ -20,7 +20,7 @@ import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import org.apache.ivy.util.url.{URLHandlerDispatcher, URLHandlerRegistry}
 import sbt.Keys._
-import sbt._
+import sbt.{_, given}
 import sbt.complete.DefaultParsers._
 
 import scala.util.Try
@@ -82,7 +82,7 @@ object S3ResolverPlugin extends AutoPlugin {
           log.error("Too many arguments for showS3Credentials")
       }
     },
-    onLoad in Global := (onLoad in Global).value andThen { state =>
+    Global / onLoad := (Global / onLoad).value andThen { state =>
       def info: String => Unit = state.log.info(_)
       def debug: String => Unit = state.log.debug(_)
 
